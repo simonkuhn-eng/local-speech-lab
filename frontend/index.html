@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Local Speech Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <h1>Local Speech Lab</h1>
+          <p>Record speech, save it locally, and transcribe with your NeMo checkpoint.</p>
+        </div>
+        <div class="status-pill" id="health-status">Initializing…</div>
+      </header>
+
+      <section class="hotkey-hints" aria-label="Keyboard shortcut">
+        <div class="hotkey" data-hotkey="dictate">
+          <span class="combo">
+            <kbd>AltGr</kbd>
+            <kbd>P</kbd>
+          </span>
+          <span class="label">Hold to dictate (release to transcribe)</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Capture audio</h2>
+        <p class="section-description">
+          Use the controls below to capture a single-channel clip. Your audio stays on this machine.
+        </p>
+        <div class="controls">
+          <button id="record-btn" class="primary">Start recording</button>
+          <button id="stop-btn" class="secondary" disabled>Stop</button>
+          <button id="save-btn" class="secondary" disabled>Save clip</button>
+        </div>
+        <div class="playback" aria-live="polite">
+          <audio id="player" controls></audio>
+          <span id="clip-duration"></span>
+        </div>
+        <p class="hint">
+          Tip: recordings are resampled to 16kHz mono before upload to match the model requirements.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Transcription</h2>
+        <p class="section-description">
+          Once a clip is saved you can run the local transcriber. Word-level timestamps are included.
+        </p>
+        <div class="controls">
+          <button id="transcribe-btn" class="primary" disabled>Transcribe latest clip</button>
+        </div>
+        <div class="output">
+          <h3>Transcript</h3>
+          <pre id="transcript" class="text-output">No transcript yet.</pre>
+
+          <h3>Word timing</h3>
+          <div class="table-wrapper">
+            <table id="word-table">
+              <thead>
+                <tr>
+                  <th>Word</th>
+                  <th>Start (s)</th>
+                  <th>End (s)</th>
+                  <th>Conf.</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="card light">
+        <h2>Recent activity</h2>
+        <ul id="log" class="log"></ul>
+      </section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
